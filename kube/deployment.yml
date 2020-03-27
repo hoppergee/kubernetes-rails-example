@@ -1,0 +1,21 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: kubernetes-rails-example
+  labels:
+    app: kubernetes-rails-example
+spec:
+  containers:
+  - name: kubernetes-rails-example-container
+    image: wokenqingtian/kubernetes-rails-example
+    ports:
+      - containerPort: 3000
+    env:
+      - name: RAILS_PRODUCTION_KEY
+        valueFrom:
+          secretKeyRef:
+            name: k-secrets
+            key: rails-master-key
+    envFrom:
+    - configMapRef:
+        name: kubernetes-rails-example-env
